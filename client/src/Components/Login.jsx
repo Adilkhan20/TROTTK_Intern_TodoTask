@@ -1,85 +1,93 @@
-import { useState } from "react";
+import React, { useRef } from "react";
+import { LoginRoute } from "../utils/constant";
+import { apiClient } from "../lib/apiClient";
 
-const Login = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [message, setMessage] = useState("");
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+export default function Login() {
+  const GoogleEmail = useRef();
+  const Password = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(Password.current.value);
+    console.log(GoogleEmail.current.value);
 
-    try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setMessage(data.message || "Login failed");
-        return;
-      }
-
-      setMessage("Login successful. Cookie is saved for future requests.");
-      console.log("Login response:", data);
-    } catch (error) {
-      setMessage("Something went wrong while logging in.");
-      console.error(error);
-    }
+    const payload = {
+      email: GoogleEmail.current.value,
+      password: Password.current.value,
+    };
+    const response = await apiClient.post(LoginRoute, payload, {
+      withCredentials: true,
+    });
+    console.log(response.status);
   };
 
   return (
-    <div className="container mt-4" style={{ maxWidth: "420px" }}>
-      <form onSubmit={handleSubmit} className="border rounded p-4 shadow-sm">
-        <h3 className="mb-3">Login</h3>
+    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+      <div
+        className="card p-4 shadow-lg"
+        style={{ width: "100%", maxWidth: "400px", borderRadius: "15px" }}
+      >
+        <div className="card-body">
+          <h3 className="card-title text-center mb-4 fw-bold text-primary">
+            Login
+          </h3>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label fw-semibold">
+                Email Address
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                ref={GoogleEmail}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
 
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            className="form-control"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="name@example.com"
-            required
-          />
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label fw-semibold">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Enter your password"
+                ref={Password}
+                required
+              />
+            </div>
+
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <div className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="rememberMe"
+                />
+                <label
+                  className="form-check-label text-muted small"
+                  htmlFor="rememberMe"
+                >
+                  Remember me
+                </label>
+              </div>
+              <a href="#" className="text-decoration-none small">
+                Forgot password?
+              </a>
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-primary w-100 py-2 fw-bold"
+            >
+              Sign In
+            </button>
+          </form>
         </div>
-
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            className="form-control"
-            value={form.password}
-            onChange={handleChange}
-            placeholder="Enter password"
-            required
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary w-100">
-          Login
-        </button>
-
-        {message && <p className="mt-3 mb-0">{message}</p>}
-      </form>
+      </div>
     </div>
   );
-};
-
-export default Login;
+}
