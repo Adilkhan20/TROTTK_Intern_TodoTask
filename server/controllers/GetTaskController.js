@@ -5,7 +5,7 @@ const GetTask = async (req, res, next) => {
   try {
     const userId = req.user.userId;
 
-    const allTasks = await Todo.find({ User: userId });
+    const allTasks = await Todo.find({ User: userId }).sort({ _id: -1 });
     console.log("Fetched Tasks:", allTasks);
 
     if (allTasks.length === 0) {
