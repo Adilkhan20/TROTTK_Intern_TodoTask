@@ -16,7 +16,7 @@ const TodoListSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "block", "Inprogress", "Done"],
+    enum: ["pending", "Block", "InProgress", "Done"],
   },
 });
 
