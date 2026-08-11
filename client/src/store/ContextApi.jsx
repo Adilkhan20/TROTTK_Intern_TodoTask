@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-const TodoContext = createContext();
+export const TodoContext = createContext();
 
 export const TodoListProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
