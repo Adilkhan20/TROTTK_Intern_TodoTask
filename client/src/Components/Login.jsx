@@ -1,24 +1,37 @@
-import React, { useRef } from "react";
+import  { useRef, useContext } from "react";
+
 import { LoginRoute } from "../utils/constant";
 import { apiClient } from "../lib/apiClient";
+import { TodoContext } from "../store/ContextApi";
 
 export default function Login() {
+  const { setIsLoggedIn } = useContext(TodoContext);
+
   const GoogleEmail = useRef();
   const Password = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(Password.current.value);
-    console.log(GoogleEmail.current.value);
 
     const payload = {
       email: GoogleEmail.current.value,
       password: Password.current.value,
     };
-    const response = await apiClient.post(LoginRoute, payload, {
-      withCredentials: true,
-    });
-    console.log(response.status);
+
+    try {
+      const response = await apiClient.post(LoginRoute, payload, {
+        withCredentials: true,
+      });
+      console.log(response.status);
+      if (response.status === 200) {
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.error(
+        "Login Error:",
+        error.response?.data?.message || error.message,
+      );
+    }
   };
 
   return (

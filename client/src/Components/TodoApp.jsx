@@ -37,11 +37,7 @@ export default function TodoApp() {
 
     if (!task) return;
 
-    const newTodo = {
-      task,
-      description,
-      status,
-    };
+   
 
     taskRef.current.value = "";
     descriptionRef.current.value = "";
