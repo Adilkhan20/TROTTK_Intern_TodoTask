@@ -4,6 +4,7 @@ const Todo = require("../models/TodoSchema");
 const addTask = async (req, res, next) => {
   try {
     const { task, description, status } = req.body;
+    console.log("request comming ", task);
     const UserId = req.user.userId;
     const TaskDatabase = await Todo.create({
       User: UserId,

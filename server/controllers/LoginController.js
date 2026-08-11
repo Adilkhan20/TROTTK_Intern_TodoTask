@@ -13,11 +13,13 @@ const LoginUser = async (req, res) => {
       });
     }
     const user = await User.findOne({ email });
+    console.log("userdatabase ", user);
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
+    console.log("password match ", passwordMatch);
     if (!passwordMatch) {
       return res.status(400).json({ message: "Login unsuccessful" });
     }

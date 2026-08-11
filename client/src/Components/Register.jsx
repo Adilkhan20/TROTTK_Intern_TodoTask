@@ -1,11 +1,12 @@
-import React, { useContext, useRef } from "react";
-import axios from "axios";
+import  { useContext, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom"; 
 import { apiClient } from "../lib/apiClient";
 import { RegisterRoute } from "../utils/constant";
 import { TodoContext } from "../store/ContextApi";
 
 export default function Register() {
-  const { setIsLoggedIn } = useContext(TodoContext);
+  const navigate = useNavigate();
+  const { setCurrentScreen } = useContext(TodoContext);
 
   const nameRef = useRef();
   const emailRef = useRef();
@@ -23,16 +24,12 @@ export default function Register() {
         { name, email, password },
         { withCredentials: true },
       );
-      console.log("Registration Success:", response.data);
 
       if (response.data) {
-        setIsLoggedIn(true);
+        console.log("Registration Success:", response.data);
+        navigate("/login");
+        setCurrentScreen("login");
       }
-      
-
-      nameRef.current.value = "";
-      emailRef.current.value = "";
-      passwordRef.current.value = "";
     } catch (error) {
       console.error(
         "Registration Error:",
@@ -101,12 +98,12 @@ export default function Register() {
 
           <div className="text-center mt-3">
             <span className="text-muted small">Already have an account? </span>
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="text-decoration-none small text-success fw-bold"
             >
               Login here
-            </a>
+            </Link>
           </div>
         </div>
       </div>
