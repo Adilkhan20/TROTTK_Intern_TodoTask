@@ -1,24 +1,43 @@
-import React, { useRef } from "react";
+import { useRef, useContext } from "react";
 import { LoginRoute } from "../utils/constant";
 import { apiClient } from "../lib/apiClient";
+import { TodoContext } from "../store/ContextApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
+  const { handleLogin } = useContext(TodoContext);
+  const navigate = useNavigate();
   const GoogleEmail = useRef();
   const Password = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(Password.current.value);
-    console.log(GoogleEmail.current.value);
 
-    const payload = {
-      email: GoogleEmail.current.value,
-      password: Password.current.value,
-    };
-    const response = await apiClient.post(LoginRoute, payload, {
-      withCredentials: true,
-    });
-    console.log(response.status);
+    const email = GoogleEmail.current.value.trim();
+    const password = Password.current.value;
+
+    if (!email || !password) return;
+
+    const payload = { email, password };
+
+    try {
+      const response = await apiClient.post(LoginRoute, payload, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        localStorage.setItem("isLoggedIn", "true");
+        toast.success("Log In  successfully!");
+        handleLogin();
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(
+        "Login Error:",
+        error.response?.data?.message || error.message,
+      );
+    }
   };
 
   return (
