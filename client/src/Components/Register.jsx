@@ -1,5 +1,5 @@
-import  { useContext, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { useContext, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { apiClient } from "../lib/apiClient";
 import { RegisterRoute } from "../utils/constant";
 import { TodoContext } from "../store/ContextApi";
@@ -7,7 +7,6 @@ import { TodoContext } from "../store/ContextApi";
 export default function Register() {
   const navigate = useNavigate();
   const { setCurrentScreen } = useContext(TodoContext);
-
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();

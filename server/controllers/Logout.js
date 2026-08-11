@@ -9,7 +9,7 @@ const LogoutUser = async (req, res) => {
         sameSite: "lax",
       })
       .status(200)
-      .json({ message: "Logout successful" });
+      .json({ message: "Logout Successfully " });
   } catch (error) {
     console.log("Error in LogoutUser:", error);
     return res.status(500).json({

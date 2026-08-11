@@ -23,7 +23,7 @@ const ShowTodo = () => {
     }
   };
 
-  const handleUpdate =  (todo) => {
+  const handleUpdate = (todo) => {
     setUpdatedTask(todo);
   };
   return (

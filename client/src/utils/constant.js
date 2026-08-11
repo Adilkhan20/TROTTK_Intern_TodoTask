@@ -7,3 +7,4 @@ export const GetTaskRoute = `${HOST}/api/task/getTask`;
 
 export const DeleteTaskRoute = `${HOST}/api/task/deleteTask`;
 export const UpdateTaskRoute = `${HOST}/api/task/updateTask`;
+export const LogoutRoute = `${HOST}/api/logout`;
