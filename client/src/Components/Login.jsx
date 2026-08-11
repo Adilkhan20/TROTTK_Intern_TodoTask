@@ -1,30 +1,34 @@
-import  { useRef, useContext } from "react";
-
+import { useRef, useContext } from "react";
 import { LoginRoute } from "../utils/constant";
 import { apiClient } from "../lib/apiClient";
 import { TodoContext } from "../store/ContextApi";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { setIsLoggedIn } = useContext(TodoContext);
-
+  const { setIsLoggedIn, handleLogin } = useContext(TodoContext);
+  const navigate = useNavigate();
   const GoogleEmail = useRef();
   const Password = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const payload = {
-      email: GoogleEmail.current.value,
-      password: Password.current.value,
-    };
+    const email = GoogleEmail.current.value.trim();
+    const password = Password.current.value;
+
+    if (!email || !password) return;
+
+    const payload = { email, password };
 
     try {
       const response = await apiClient.post(LoginRoute, payload, {
         withCredentials: true,
       });
-      console.log(response.status);
+
       if (response.status === 200) {
-        setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true");
+        handleLogin();
+        navigate("/");
       }
     } catch (error) {
       console.error(
