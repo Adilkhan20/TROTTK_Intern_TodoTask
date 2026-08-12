@@ -3,9 +3,10 @@ import { LoginRoute } from "../utils/constant";
 import { apiClient } from "../lib/apiClient";
 import { TodoContext } from "../store/ContextApi";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
-  const { setIsLoggedIn, handleLogin } = useContext(TodoContext);
+  const { handleLogin } = useContext(TodoContext);
   const navigate = useNavigate();
   const GoogleEmail = useRef();
   const Password = useRef();
@@ -27,11 +28,12 @@ export default function Login() {
 
       if (response.status === 200) {
         localStorage.setItem("isLoggedIn", "true");
+        toast.success("Log In  successfully!");
         handleLogin();
         navigate("/");
       }
     } catch (error) {
-      console.error(
+      toast.error(
         "Login Error:",
         error.response?.data?.message || error.message,
       );

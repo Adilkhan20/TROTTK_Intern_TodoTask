@@ -3,6 +3,7 @@ import { apiClient } from "../lib/apiClient";
 import { AddTaskRoute, UpdateTaskRoute } from "../utils/constant";
 import ShowTodo from "./ShowTodo";
 import { TodoContext } from "../store/ContextApi";
+import Logout from "./Logout";
 
 export default function TodoApp() {
   const taskRef = useRef();
@@ -77,7 +78,6 @@ export default function TodoApp() {
           <h2 className="fw-bold text-danger display-6 mb-1">MERN Todo</h2>
           <p className="text-muted small">Trot Tk tasks and assignments</p>
         </div>
-
         <form onSubmit={handleAddTodo} className="row g-3 mb-4">
           <div className="col-12 col-md-8">
             <label className="form-label fw-semibold text-secondary small">
@@ -140,8 +140,10 @@ export default function TodoApp() {
             )}
           </div>
         </form>
-
         <ShowTodo />
+        <hr />
+        <hr />
+        <Logout></Logout>
       </div>
     </div>
   );
