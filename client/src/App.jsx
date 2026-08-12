@@ -7,7 +7,6 @@ import { TodoContext } from "./store/ContextApi";
 
 function App() {
   const { isLoggedIn } = useContext(TodoContext);
-  console.log("after login ", isLoggedIn);
 
   return (
     <Routes>

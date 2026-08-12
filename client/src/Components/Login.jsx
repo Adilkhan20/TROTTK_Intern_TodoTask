@@ -33,10 +33,11 @@ export default function Login() {
         navigate("/");
       }
     } catch (error) {
-      toast.error(
+      console.error(
         "Login Error:",
         error.response?.data?.message || error.message,
       );
+      
     }
   };
 

@@ -28,8 +28,7 @@ export const TodoListProvider = ({ children }) => {
         const response = await apiClient.get(GetTaskRoute, {
           withCredentials: true,
         });
-        console.log("API Response:", response.data.allTasks);
-
+        
         setTodos(response.data.allTasks);
       } catch (error) {
         console.error("Error fetching todos:", error);
