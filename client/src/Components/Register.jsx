@@ -10,13 +10,11 @@ export default function Register() {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-
   const handleRegister = async (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-
     try {
       const response = await apiClient.post(
         RegisterRoute,
@@ -25,7 +23,6 @@ export default function Register() {
       );
 
       if (response.data) {
-        console.log("Registration Success:", response.data);
         navigate("/login");
         setCurrentScreen("login");
       }
