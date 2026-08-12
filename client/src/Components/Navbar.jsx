@@ -10,20 +10,17 @@ const Navbar = () => {
       const response = await apiClient.post(LogoutRoute, {
         withCredentials: true,
       });
-
-      console.log(response.status);
       if (response.status === 200) {
         handleLogout();
       }
     } catch (error) {
-      alert("error :", error);
+      console.log("error :", error);
     }
   };
   return (
     <nav className="navbar bg-primary" data-bs-theme="dark">
       <div className="container-fluid">
         <a className="navbar-brand">Trot TK </a>
-
         <button className="btn btn-danger" onClick={HandleLogout}>
           Logout
         </button>

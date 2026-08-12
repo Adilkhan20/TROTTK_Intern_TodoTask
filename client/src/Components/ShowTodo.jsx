@@ -10,9 +10,7 @@ const ShowTodo = () => {
       const response = await apiClient.delete(`${DeleteTaskRoute}/${id}`, {
         withCredentials: true,
       });
-      console.log(response.status);
       if (response.status === 200) {
-        console.log("response :", response);
         refetchTodos();
       }
     } catch (error) {

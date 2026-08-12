@@ -4,7 +4,6 @@ const Todo = require("../models/TodoSchema");
 const addTask = async (req, res, next) => {
   try {
     const { task, description, status } = req.body;
-    console.log("request comming ", task);
     const UserId = req.user.userId;
     const TaskDatabase = await Todo.create({
       User: UserId,
@@ -17,7 +16,10 @@ const addTask = async (req, res, next) => {
       TaskDatabase,
     });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({
+      Message: "Internal Server Error",
+      error: error.message,
+    });
   }
 };
 
@@ -67,7 +69,6 @@ const deleteTask = async (req, res, next) => {
       deletedData: deletedTask,
     });
   } catch (error) {
-    console.log("Error in deleteTask:", error);
     return res.status(500).json({
       message: "Internal Server Error",
       error: error.message,
@@ -109,7 +110,6 @@ const updateTask = async (req, res, next) => {
       Data: UpdateTask,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "Internal Server Error",
       error: error.message,
