@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { LoginUser } = require("../controllers/LoginController");
-const { RegisterUser } = require("../controllers/RegisterController");
-const { LogoutUser } = require("../controllers/Logout");
 const IsAuthenticated = require("../middleware/IsAuthenticated");
+const {
+  LoginUser,
+  RegisterUser,
+  LogoutUser,
+} = require("../controllers/AuthController");
 
 router.post("/login", LoginUser);
 router.post("/register", RegisterUser);
