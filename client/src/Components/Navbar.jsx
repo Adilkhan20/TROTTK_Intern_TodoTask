@@ -1,9 +1,9 @@
 import { useContext } from "react";
+import { TodoContext } from "../store/ContextApi";
 import { apiClient } from "../lib/apiClient";
 import { LogoutRoute } from "../utils/constant";
-import { TodoContext } from "../store/ContextApi";
 
-const Logout = () => {
+const Navbar = () => {
   const { handleLogout } = useContext(TodoContext);
   const HandleLogout = async () => {
     try {
@@ -20,18 +20,16 @@ const Logout = () => {
     }
   };
   return (
-    <div>
-      <button
-        type="button"
-        class="btn btn-danger"
-        onClick={() => {
-          HandleLogout();
-        }}
-      >
-        logout
-      </button>
-    </div>
+    <nav className="navbar bg-primary" data-bs-theme="dark">
+      <div className="container-fluid">
+        <a className="navbar-brand">Trot TK </a>
+
+        <button className="btn btn-danger" onClick={HandleLogout}>
+          Logout
+        </button>
+      </div>
+    </nav>
   );
 };
 
-export default Logout;
+export default Navbar;
